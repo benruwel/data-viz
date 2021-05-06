@@ -1,0 +1,48 @@
+<div class="flex justify-center items-center h-full w-full">
+  <div class="p-6 my-20 bg-white rounded-lg shadow-md max-w-4xl">
+    <h1 class="text-lg text-gray-600 text-center font-medium">{{ chartType$ | async | titlecase }} chart</h1>
+    <div class="flex flex-row space-x-8 items-center justify-end my-6 px-6 w-full">
+      <div class="flex flex-row space-x-2 items-center">
+        <input
+          (change)="toggleOnline()"
+          type="checkbox"
+          id="online"
+          [value]="showOnline"
+          [checked]="showOnline"
+        />
+        <label for="online">Online</label>
+      </div>
+      <div class="flex flex-row space-x-2 items-center">
+        <input
+          (change)="toggleInStore()"
+          type="checkbox"
+          id="instore"
+          [value]="showInStore"
+          [checked]="showInStore"
+        />
+        <label for="instore">In store</label>
+      </div>
+      <div>
+        <select (change)="onSelect($event)" name="sincePublished" id="sincePublished" class="block px-4 py-2 text-sm border border-gray-200 shadow rounded w-72">
+          <option value="" selected disabled>Since published</option>
+          <option value="7">Last 7 days</option>
+          <option value="14">Last 14 days</option>
+          <option value="28">Last 28 days</option>
+        </select>
+      </div>
+    </div>
+
+    <canvas
+      baseChart
+      class="max-w-5xl"
+      [datasets]="barChartData$| async"
+      [labels]="barChartLabels$ | async"
+      [options]="barChartOptions"
+      [colors]="barChartColors"
+      [legend]="barChartLegend"
+      [chartType]="chartType$ | async"
+      [plugins]="barChartPlugins"
+    >
+    </canvas>
+  </div>
+</div>
