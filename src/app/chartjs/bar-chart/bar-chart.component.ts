@@ -29,22 +29,33 @@ export class BarChartComponent implements OnInit, AfterViewInit {
   public barChartLabels = [];
   public barChartOptions: ChartOptions = {
     responsive: true,
-    plugins: {
-      datalabels: {
-        anchor: 'end',
-        align: 'end',
-      },
+    maintainAspectRatio: false,
+    onResize(newSize): void {
+      const chartObj: any = this;
+      if (newSize.width > 700) {
+        chartObj.scales.yAxes.forEach((item) => {
+          item.ticks.display = true;
+        });
+        chartObj.scales.xAxes.forEach((item) => {
+          item.ticks.display = true;
+          item.ticks.maxRotation = 20;
+        });
+      }
     },
     scales: {
       yAxes: [
         {
-          ticks: { fontFamily: "'Poppins', sans-serif" },
+          ticks: {
+            fontFamily: "'Poppins', sans-serif",
+            display: false,
+            fontColor: '#1C2647',
+          },
           type: 'linear',
           scaleLabel: {
             display: true,
             labelString: 'Revenue in KES',
             fontFamily: "'Poppins', sans-serif",
-            fontSize: 22,
+            fontSize: 14,
           },
         },
       ],
@@ -55,27 +66,25 @@ export class BarChartComponent implements OnInit, AfterViewInit {
               const date = new Date(value);
               return `${date.toDateString()}`;
             },
+            fontFamily: "'Poppins', sans-serif",
+            display: false,
+            fontColor: '#1C2647',
+            autoSkip: true,
+            autoSkipPadding: 5,
+            maxRotation: 10,
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Time',
+            fontFamily: "'Poppins', sans-serif",
+            fontColor: '#1C2647',
+            fontSize: 16,
           },
         },
       ],
     },
   };
-  public barChartColors: Color[] = [
-    {
-      // dark grey
-      borderColor: 'rgb(15,66,191)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(77,83,96,1)',
-    },
-    {
-      // red
-      borderColor: 'rgb(56,224,27)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-    },
-  ];
+  public barChartColors: Color[] = [];
   public chartDefaults;
   public barChartLegend = true;
   public barChartType: ChartType = 'bar';
@@ -92,13 +101,15 @@ export class BarChartComponent implements OnInit, AfterViewInit {
       data: this.revenueSevice.getRevenueData().map((item) => item.amount),
       label: 'Online',
       fill: true,
-      backgroundColor: 'green',
+      backgroundColor: '#D6D8E3',
+      hoverBackgroundColor: '#1C2647',
     };
     const inStoreDate: ChartDataSets = {
       data: this.revenueSevice.getRevenueData().map((item) => item.amount),
       label: 'In Store',
       fill: true,
-      backgroundColor: 'blue',
+      backgroundColor: '#7E84AD',
+      hoverBackgroundColor: '#FBDC0D',
     };
     const dataSets = [onlineData, inStoreDate];
     this.barChartDataSubj.next(dataSets);

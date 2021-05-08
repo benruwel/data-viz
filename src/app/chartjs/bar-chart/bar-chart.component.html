@@ -1,7 +1,7 @@
 <div class="flex justify-center items-center h-full w-full">
-  <div class="p-6 my-20 bg-white rounded-lg shadow-md max-w-4xl">
+  <div class="p-6 my-20 bg-white rounded-lg shadow-md w-full">
     <h1 class="text-lg text-gray-600 text-center font-medium">{{ chartType$ | async | titlecase }} chart</h1>
-    <div class="flex flex-row space-x-8 items-center justify-end my-6 px-6 w-full">
+    <div class="flex flex-col space-y-2 items-center justify-end my-6 px-6 w-full md:flex-row md:space-x-8 md:space-y-0">
       <div class="flex flex-row space-x-2 items-center">
         <input
           (change)="toggleOnline()"
@@ -32,17 +32,18 @@
       </div>
     </div>
 
-    <canvas
-      baseChart
-      class="max-w-5xl"
-      [datasets]="barChartData$| async"
-      [labels]="barChartLabels$ | async"
-      [options]="barChartOptions"
-      [colors]="barChartColors"
-      [legend]="barChartLegend"
-      [chartType]="chartType$ | async"
-      [plugins]="barChartPlugins"
-    >
-    </canvas>
+    <div class="relative max-w-5xl mx-auto h-96 chart-height">
+      <canvas
+        baseChart
+        [datasets]="barChartData$| async"
+        [labels]="barChartLabels$ | async"
+        [options]="barChartOptions"
+        [colors]="barChartColors"
+        [legend]="barChartLegend"
+        [chartType]="chartType$ | async"
+        [plugins]="barChartPlugins"
+      >
+      </canvas>
+    </div>
   </div>
 </div>

@@ -1,9 +1,8 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
-import { BaseChartDirective, Color, Label } from 'ng2-charts';
+import { BaseChartDirective, Color } from 'ng2-charts';
 import { RevenueService } from '../../services/revenue.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Revenue } from '../../services/revenue';
 
 @Component({
   selector: 'app-chart',
@@ -30,36 +29,53 @@ export class ChartComponent implements OnInit, AfterViewInit {
   public lineChartLabels = [];
   public lineChartOptions: ChartOptions = {
     responsive: true,
-    layout: {
-      padding: 16,
-    },
-    plugins: {
-      filler: {
-        propagate: true,
-      },
+    maintainAspectRatio: false,
+    onResize(newSize): void {
+      const chartObj: any = this;
+      if (newSize.width > 700) {
+        chartObj.scales.yAxes.forEach((item) => {
+          item.ticks.display = true;
+        });
+        chartObj.scales.xAxes.forEach((item) => {
+          item.ticks.display = true;
+        });
+      }
     },
     scales: {
       yAxes: [
         {
-          ticks: { fontFamily: "'Poppins', sans-serif" },
+          ticks: {
+            fontFamily: "'Poppins', sans-serif",
+            display: false,
+            fontColor: '#1C2647',
+          },
           type: 'linear',
           scaleLabel: {
             display: true,
             labelString: 'Revenue in KES',
             fontFamily: "'Poppins', sans-serif",
-            fontSize: 22,
+            fontColor: '#1C2647',
+            fontSize: 14,
           },
         },
       ],
       xAxes: [
         {
-          ticks: { fontFamily: "'Poppins', sans-serif" },
+          ticks: {
+            fontFamily: "'Poppins', sans-serif",
+            display: false,
+            fontColor: '#1C2647',
+          },
           type: 'time',
           scaleLabel: {
             display: true,
             labelString: 'Time',
             fontFamily: "'Poppins', sans-serif",
-            fontSize: 22,
+            fontColor: '#1C2647',
+            fontSize: 16,
+          },
+          time: {
+            unit: 'day',
           },
         },
       ],
@@ -68,17 +84,27 @@ export class ChartComponent implements OnInit, AfterViewInit {
   public lineChartColors: Color[] = [
     {
       // dark grey
-      borderColor: 'rgb(15,66,191)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(77,83,96,1)',
+      borderColor: '#D6D8E3',
+      pointBackgroundColor: '#1C2647',
+      pointBorderColor: '#1C2647',
+      pointHoverBackgroundColor: '#FBDC0D',
+      pointHoverBorderColor: 'rgba(0,0,0,0.8)',
+      pointStyle: 'circle',
+      pointRadius: 2.5,
+      pointHoverRadius: 5,
+      pointBorderWidth: 1,
     },
     {
       // red
-      borderColor: 'rgb(56,224,27)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)',
+      borderColor: '#7E84AD',
+      pointBackgroundColor: '#1C2647',
+      pointBorderColor: '#1C2647',
+      pointHoverBackgroundColor: '#FBDC0D',
+      pointHoverBorderColor: 'rgba(0,0,0,0.8)',
+      pointStyle: 'circle',
+      pointRadius: 2.5,
+      pointHoverRadius: 5,
+      pointBorderWidth: 1,
     },
   ];
   public chartDefaults;
@@ -98,12 +124,15 @@ export class ChartComponent implements OnInit, AfterViewInit {
       label: 'Online',
       borderColor: 'blue',
       fill: false,
+      type: 'line',
+      lineTension: 0,
     };
     const inStoreDate: ChartDataSets = {
       data: this.revenueSevice.getRevenueData().map((item) => item.amount),
       label: 'In Store',
       borderColor: 'green',
       fill: false,
+      lineTension: 0,
     };
     const dataSets = [onlineData, inStoreDate];
     this.lineChartDataSubj.next(dataSets);

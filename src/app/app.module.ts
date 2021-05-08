@@ -9,6 +9,8 @@ import { PieChartComponent } from './chartjs/pie-chart/pie-chart.component';
 import { D3BarChartComponent } from './d3/d3-bar-chart/d3-bar-chart.component';
 import { RevenueService } from './services/revenue.service';
 import { BarChartComponent } from './chartjs/bar-chart/bar-chart.component';
+import { DoughnutChartComponent } from './chartjs/doughnut-chart/doughnut-chart.component';
+import { PercentageRepComponent } from './chartjs/percentage-rep/percentage-rep.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { BarChartComponent } from './chartjs/bar-chart/bar-chart.component';
     PieChartComponent,
     D3BarChartComponent,
     BarChartComponent,
+    DoughnutChartComponent,
+    PercentageRepComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, ChartsModule],
   providers: [RevenueService],
