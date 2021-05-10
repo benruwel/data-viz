@@ -11,6 +11,7 @@ import { RevenueService } from './services/revenue.service';
 import { BarChartComponent } from './chartjs/bar-chart/bar-chart.component';
 import { DoughnutChartComponent } from './chartjs/doughnut-chart/doughnut-chart.component';
 import { PercentageRepComponent } from './chartjs/percentage-rep/percentage-rep.component';
+import { ScatterComponent } from './chartjs/scatter/scatter.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { PercentageRepComponent } from './chartjs/percentage-rep/percentage-rep.
     BarChartComponent,
     DoughnutChartComponent,
     PercentageRepComponent,
+    ScatterComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, ChartsModule],
   providers: [RevenueService],
